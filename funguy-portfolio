@@ -1,0 +1,123 @@
+/* Funguy Blazor WebAssembly Portfolio - Starter */
+
+// File: Program.cs
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using FunguyPortfolio;
+
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>('#app');
+builder.RootComponents.Add<HeadOutlet>('head::after');
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+await builder.Build().RunAsync();
+
+
+// File: wwwroot/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link href="css/app.css" rel="stylesheet" />
+    <title>Funguy | .NET Developer</title>
+</head>
+<body>
+    <div id="app">Loading...</div>
+    <script src="_framework/blazor.webassembly.js"></script>
+</body>
+</html>
+
+
+// File: App.razor
+<Router AppAssembly="typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
+    </Found>
+    <NotFound>
+        <LayoutView Layout="typeof(MainLayout)">
+            <p>Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+
+// File: Shared/MainLayout.razor
+@inherits LayoutComponentBase
+
+<div class="min-h-screen bg-[#FAF3E0] text-[#2C3E50]">
+    <NavMenu />
+    <main class="p-4">
+        @Body
+    </main>
+</div>
+
+
+// File: Shared/NavMenu.razor
+<nav class="bg-[#C0392B] text-white p-4 shadow-md flex justify-between">
+    <div class="font-bold text-lg">🍄 Funguy</div>
+    <div class="flex gap-4">
+        <NavLink href="/" Match="NavLinkMatch.All">🌱 Welcome</NavLink>
+        <NavLink href="/about">🍄 My Roots</NavLink>
+        <NavLink href="/projects">🌳 My Forest</NavLink>
+        <NavLink href="/contact">📨 Say Hi</NavLink>
+    </div>
+</nav>
+
+
+// File: Pages/Index.razor
+<h1 class="text-3xl font-bold">Hi, I'm Funguy 🍄</h1>
+<p class="mt-2">.NET Developer who loves clean code and mushrooms.</p>
+<p class="mt-2">Explore my spores of knowledge and forest of code!</p>
+
+
+// File: Pages/About.razor
+<h2 class="text-2xl font-semibold">🍄 My Roots</h2>
+<p>I'm a .NET developer passionate about C#, Blazor, and building apps with good architecture.</p>
+<ul class="list-disc ml-5 mt-2">
+    <li>Proficient in ASP.NET Core, Blazor, Entity Framework</li>
+    <li>Cloud experience with Azure</li>
+    <li>Practices SOLID principles and clean architecture</li>
+</ul>
+
+
+// File: Pages/Projects.razor
+<h2 class="text-2xl font-semibold">🌳 My Forest</h2>
+<p>Here are some projects I've worked on (more coming soon!).</p>
+<div class="mt-4">
+    <div class="p-4 border rounded-lg shadow-md bg-white">
+        <h3 class="text-xl font-bold">Mushroom Tracker API</h3>
+        <p>ASP.NET Core REST API to log foraged mushrooms with photos and locations.</p>
+        <p><strong>Tech:</strong> .NET 8, EF Core, Azure Blob Storage</p>
+        <a href="#" class="text-blue-500 underline">View Code</a>
+    </div>
+</div>
+
+
+// File: Pages/Contact.razor
+<h2 class="text-2xl font-semibold">📨 Say Hi</h2>
+<p>Want to connect? I'm always up for a coding chat or collab!</p>
+<ul class="mt-4">
+    <li>Email: funguy@devmail.com</li>
+    <li>GitHub: github.com/funguy</li>
+    <li>LinkedIn: linkedin.com/in/funguy</li>
+</ul>
+
+
+// File: wwwroot/css/app.css
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #FAF3E0;
+    color: #2C3E50;
+    margin: 0;
+    padding: 0;
+}
+a {
+    color: #C0392B;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* Add Tailwind or custom utility classes as needed */
